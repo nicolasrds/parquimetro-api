@@ -25,7 +25,7 @@ public class CartaoService {
     }
 
     public List<Cartao> listarCartaoPorCondutorId(Long condutorId) {
-        return cartaoRepository.findCartaoByCondutor_id(condutorId);
+        return cartaoRepository.findCartaoByCondutorId(condutorId);
     }
 
 }

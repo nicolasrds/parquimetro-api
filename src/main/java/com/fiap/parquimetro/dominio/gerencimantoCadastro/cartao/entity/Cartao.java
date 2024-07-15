@@ -20,19 +20,19 @@ public class Cartao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cartao_id")
+    @Column(name = "car_id")
     private Long id;
 
-    @Column(name = "cartao_numero", nullable = false, length = 16)
+    @Column(name = "car_numero", nullable = false, length = 16)
     private String numero;
 
-    @Column(name = "cartao_nome_titular", nullable = false)
+    @Column(name = "car_nome_titular", nullable = false)
     private String titular;
 
-    @Column(name = "cartao_data_validade", nullable = false)
+    @Column(name = "car_data_validade", nullable = false)
     private LocalDate validade;
 
-    @Column(name = "cartao_cvv", nullable = false, length = 4)
+    @Column(name = "car_cvv", nullable = false, length = 4)
     private String cvv;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
