@@ -13,7 +13,11 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
-@Table(name = "condutor", schema = "controle_estabelecimento")
+@Table(name = "condutor", schema = "controle_estabelecimento",
+        indexes = {
+                @Index(name = "uk_con_cpf", columnList = "con_cpf", unique = true),
+                @Index(name = "uk_con_email", columnList = "con_email", unique = true)
+        })
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
