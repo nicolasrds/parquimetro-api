@@ -10,28 +10,29 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import java.math.BigDecimal;
+
 @Entity
-@Table(name = "Estacionamento", schema = "controle_estacionamento")
+@Table(name = "estacionamento", schema = "controle_estacionamento")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-
 public class Estacionamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "est_id")
-    private Long idEstacionamento;
+    private Long id;
 
     @NotEmpty
     @Column(name = "est_nome", nullable = false)
     @Length(min = 5)
-    private String nomeEstacionamento;
+    private String nome;
 
     @NotEmpty
     @Column(name = "est_tarifa", nullable = false)
-    private float tarifa;
+    private BigDecimal tarifa;
 
     @NotEmpty
     @Column(name = "est_tipoTarifa", nullable = false)
@@ -45,7 +46,7 @@ public class Estacionamento {
     private Endereco endereco;
 
     public Estacionamento(DadosEstacionamento dadosEstacionamento){
-        this.nomeEstacionamento= dadosEstacionamento.nomeEstacionamento();
+        this.nome = dadosEstacionamento.nomeEstacionamento();
         this.tarifa = dadosEstacionamento.tarifa();
         this.tipoTarifa = dadosEstacionamento.tipoTarifa();
         this.chavePIX = dadosEstacionamento.chavePIX();

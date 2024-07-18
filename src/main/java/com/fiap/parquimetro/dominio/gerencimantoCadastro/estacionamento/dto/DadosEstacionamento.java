@@ -4,13 +4,15 @@ import com.fiap.parquimetro.dominio.gerencimantoCadastro.estacionamento.entity.E
 import com.fiap.parquimetro.dominio.util.Endereco;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.math.BigDecimal;
+
 public record DadosEstacionamento(
 
         @NotEmpty
         String nomeEstacionamento,
 
         @NotEmpty
-        float tarifa,
+        BigDecimal tarifa,
 
         char tipoTarifa,
 
@@ -20,7 +22,7 @@ public record DadosEstacionamento(
 ) {
 
     public DadosEstacionamento(Estacionamento estacionamento) {
-        this(estacionamento.getNomeEstacionamento(), estacionamento.getTarifa(),
+        this(estacionamento.getNome(), estacionamento.getTarifa(),
                 estacionamento.getTipoTarifa(), estacionamento.getChavePIX(), estacionamento.getEndereco());
     }
 

@@ -23,7 +23,7 @@ public class EstacionamentoResource {
                                                          UriComponentsBuilder uriComponentsBuilder) {
         Estacionamento estacionamento = new Estacionamento(dadosEstacionamento);
         estacionamentoService.atualizarEstacionamento(estacionamento);
-        var uri = uriComponentsBuilder.path("/api/v1/estacionamento/{id}").buildAndExpand(estacionamento.getIdEstacionamento()).toUri();
+        var uri = uriComponentsBuilder.path("/api/v1/estacionamento/{id}").buildAndExpand(estacionamento.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DadosEstacionamento(estacionamento));
 
