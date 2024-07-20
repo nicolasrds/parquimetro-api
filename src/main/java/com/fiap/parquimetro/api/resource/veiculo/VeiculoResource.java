@@ -1,7 +1,7 @@
 package com.fiap.parquimetro.api.resource.veiculo;
 
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.veiculo.dto.DadosVeiculo;
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.veiculo.service.VeiculoService;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.veiculo.dto.DadosVeiculo;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.veiculo.service.VeiculoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

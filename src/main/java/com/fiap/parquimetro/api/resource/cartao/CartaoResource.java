@@ -1,8 +1,8 @@
 package com.fiap.parquimetro.api.resource.cartao;
 
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.cartao.dto.DadosCartao;
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.cartao.entity.Cartao;
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.cartao.service.CartaoService;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.cartao.dto.DadosCartao;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.cartao.entity.Cartao;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.cartao.service.CartaoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
