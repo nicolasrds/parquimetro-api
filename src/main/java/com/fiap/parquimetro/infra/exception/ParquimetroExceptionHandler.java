@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -49,6 +50,12 @@ public class ParquimetroExceptionHandler {
     public ResponseEntity handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
                 ex, getMessage("dataIntegrityViolationMessage"))));
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity handleHttpRequestMethodNotSupportedExceptionException(HttpRequestMethodNotSupportedException ex) {
+        return ResponseEntity.badRequest().body((new DadosErro(
+                ex, getMessage("httpRequestMethodNotSupportedException"))));
     }
 
     @ExceptionHandler({ConstraintViolationException.class})

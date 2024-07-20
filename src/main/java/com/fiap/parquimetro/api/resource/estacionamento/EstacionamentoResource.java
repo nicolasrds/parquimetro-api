@@ -1,8 +1,8 @@
 package com.fiap.parquimetro.api.resource.estacionamento;
 
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.estacionamento.dto.DadosEstacionamento;
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.estacionamento.entity.Estacionamento;
-import com.fiap.parquimetro.dominio.gerencimantoCadastro.estacionamento.service.EstacionamentoService;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.estacionamento.dto.DadosEstacionamento;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.estacionamento.entity.Estacionamento;
+import com.fiap.parquimetro.dominio.gerencimentoCadastro.estacionamento.service.EstacionamentoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
