@@ -1,12 +1,12 @@
 package com.fiap.parquimetro.infra.exception;
 
+import com.fiap.parquimetro.infra.util.MessageService;
 import jakarta.el.MethodNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.UnexpectedTypeException;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -21,53 +21,73 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @RestControllerAdvice
 public class ParquimetroExceptionHandler {
 
+    private final MessageService messageService;
+
     @ExceptionHandler({EntityNotFoundException.class})
     public ResponseEntity tratarErro404(EntityNotFoundException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
-                ex, getMessage("recurso.nao-encontrado"))));
+                ex, messageService.getMessage("recurso.nao-encontrado"))));
     }
 
     @ExceptionHandler({NoResourceFoundException.class})
     public ResponseEntity tratarErro404(NoResourceFoundException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
-                ex, getMessage("recurso.nao-encontrado"))));
+                ex, messageService.getMessage("recurso.nao-encontrado"))));
     }
 
     @ExceptionHandler({MethodNotFoundException.class,})
     public ResponseEntity tratarErro404(MethodNotFoundException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
-                ex, getMessage("recurso.nao-encontrado"))));
+                ex, messageService.getMessage("recurso.nao-encontrado"))));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
         var erros = ex.getFieldErrors();
         return ResponseEntity.badRequest().body(erros.stream().map(erro ->
-                new DadosErroValidacao(erro, getMessage("methodArgumentNotValidMessage"))).toList());
+                new DadosErroValidacao(erro, messageService.getMessage("methodArgumentNotValidMessage"))).toList());
+    }
+
+    @ExceptionHandler({UnexpectedTypeException.class})
+    public ResponseEntity<Object> handleUnexpectedTypeExceptionException(UnexpectedTypeException ex) {
+        return ResponseEntity.badRequest().body((new DadosErro(
+                ex, messageService.getMessage("unexpectedTypeMessageMessage"))));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
-                ex, getMessage("dataIntegrityViolationMessage"))));
+                ex, messageService.getMessage("dataIntegrityViolationMessage"))));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity handleHttpRequestMethodNotSupportedExceptionException(HttpRequestMethodNotSupportedException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
-                ex, getMessage("httpRequestMethodNotSupportedException"))));
+                ex, messageService.getMessage("httpRequestMethodNotSupportedExceptionMessage"))));
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
-                ex, getMessage("constraintViolationMessage"))));
+                ex, messageService.getMessage("constraintViolationMessage"))));
     }
 
     @ExceptionHandler({EmptyResultDataAccessException.class})
     public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
-                ex, getMessage("constraintViolationMessage"))));
+                ex, messageService.getMessage("constraintViolationMessage"))));
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<Object> handleNullPointerException(NullPointerException ex) {
+        return ResponseEntity.badRequest().body((new DadosErro(
+                ex, messageService.getMessage("nullPointerExceptionMessage"))));
+    }
+
+    @ExceptionHandler(RegraDeNegocioException.class)
+    public ResponseEntity<Object> handleRegraDeNegocioException(RegraDeNegocioException ex) {
+        return ResponseEntity.badRequest().body((new DadosErro(
+                ex, ex.getMessage())));
     }
 
     private record DadosErroValidacao(String campo, String mensagemUsuario, String mensagemDesenvolvedor) {
@@ -84,10 +104,4 @@ public class ParquimetroExceptionHandler {
 
     }
 
-    private String getMessage(String mensagem) {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource.getMessage(mensagem, null, LocaleContextHolder.getLocale());
-    }
 }
