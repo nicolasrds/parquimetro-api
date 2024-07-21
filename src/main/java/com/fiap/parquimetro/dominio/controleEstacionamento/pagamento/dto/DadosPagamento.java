@@ -18,7 +18,7 @@ public record DadosPagamento(
         LocalDateTime data,
         @NotNull
         TipoPagamento tipo,
-        @NotNull
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         BigDecimal valor
 ) {
     public DadosPagamento(Pagamento pagamento) {

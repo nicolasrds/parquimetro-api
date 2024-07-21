@@ -1,6 +1,6 @@
 package com.fiap.parquimetro.dominio.controleEstacionamento.registro.dto;
 
-import com.fiap.parquimetro.dominio.controleCadastro.condutor.dto.DadosCondutorVeiculo;
+import com.fiap.parquimetro.dominio.controleCadastro.veiculo.dto.DadosCondutorVeiculo;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.entity.Veiculo;
 import jakarta.validation.constraints.NotNull;
 

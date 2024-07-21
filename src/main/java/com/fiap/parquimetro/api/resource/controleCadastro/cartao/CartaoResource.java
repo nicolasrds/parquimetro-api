@@ -3,6 +3,7 @@ package com.fiap.parquimetro.api.resource.controleCadastro.cartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.dto.DadosCartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.entity.Cartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.service.CartaoService;
+import com.fiap.parquimetro.dominio.util.UriUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,10 +27,7 @@ public class CartaoResource {
                                                  @Valid @RequestBody DadosCartao dadosCartao                                                 ) {
         Cartao cartao = new Cartao(dadosCartao);
         cartaoService.salvar(condutorId, cartao);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand((cartao.getId())).toUri();
-
-        return ResponseEntity.created(uri).body(new DadosCartao(cartao));
+        return ResponseEntity.created(UriUtil.createUriWithId(cartao.getId())).body(new DadosCartao(cartao));
     }
 
     @GetMapping("cartoes-do-condutor/{condutorId}")

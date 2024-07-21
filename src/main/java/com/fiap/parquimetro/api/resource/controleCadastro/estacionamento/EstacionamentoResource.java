@@ -3,6 +3,7 @@ package com.fiap.parquimetro.api.resource.controleCadastro.estacionamento;
 import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.dto.DadosEstacionamento;
 import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.entity.Estacionamento;
 import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.service.EstacionamentoService;
+import com.fiap.parquimetro.dominio.util.UriUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,9 +30,8 @@ public class EstacionamentoResource {
                                                          UriComponentsBuilder uriComponentsBuilder) {
         Estacionamento estacionamento = new Estacionamento(dadosEstacionamento);
         estacionamentoService.atualizarEstacionamento(estacionamento);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand((estacionamento.getId())).toUri();
-        return ResponseEntity.created(uri).body(new DadosEstacionamento(estacionamento));
+        return ResponseEntity.created(UriUtil.createUriWithId(estacionamento.getId()))
+                .body(new DadosEstacionamento(estacionamento));
 
     }
 

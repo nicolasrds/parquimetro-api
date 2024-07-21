@@ -1,7 +1,6 @@
 package com.fiap.parquimetro.dominio.controleEstacionamento.pagamento.entity;
 
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.entity.Cartao;
-import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.entity.Estacionamento;
 import com.fiap.parquimetro.dominio.controleEstacionamento.pagamento.dto.DadosPagamento;
 import com.fiap.parquimetro.dominio.controleEstacionamento.pagamento.enumeration.TipoPagamento;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.entity.Registro;
@@ -58,6 +57,6 @@ public class Pagamento {
         setRegistro(registro);
         setCartao(cartao);
         setData(LocalDateTime.now());
-        setValor(dadosPagamento.valor());
+        setValor(registro.getTipo().calcularValorDevido(registro));
     }
 }

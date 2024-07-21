@@ -3,6 +3,7 @@ package com.fiap.parquimetro.api.resource.controleEstacionamento.registro;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.dto.DadosRegistro;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.entity.Registro;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.service.RegistroService;
+import com.fiap.parquimetro.dominio.util.UriUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,9 +35,7 @@ public class RegistroResource {
     public ResponseEntity<DadosRegistro> cadastrar(@Valid @RequestBody DadosRegistro dadosRegistro) {
         Registro registro = registroService.salvar(dadosRegistro);
         dadosRegistro = new DadosRegistro(registro);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand((registro.getId())).toUri();
-        return ResponseEntity.created(uri).body(dadosRegistro);
+        return ResponseEntity.created(UriUtil.createUriWithId(registro.getId())).body(dadosRegistro);
     }
 
     @PutMapping("/{id}/encerrar")

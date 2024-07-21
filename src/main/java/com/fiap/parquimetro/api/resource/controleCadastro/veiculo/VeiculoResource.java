@@ -3,6 +3,7 @@ package com.fiap.parquimetro.api.resource.controleCadastro.veiculo;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.dto.DadosVeiculo;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.entity.Veiculo;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.service.VeiculoService;
+import com.fiap.parquimetro.dominio.util.UriUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,9 +41,7 @@ public class VeiculoResource {
     public ResponseEntity<DadosVeiculo> save(@Valid @RequestBody DadosVeiculo dadosVeiculo){
         Veiculo veiculo = veiculoService.salvarVeiculo(dadosVeiculo);
         dadosVeiculo = new DadosVeiculo(veiculo);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand((veiculo.getId())).toUri();
-        return ResponseEntity.created(uri).body(dadosVeiculo);
+        return ResponseEntity.created(UriUtil.createUriWithId(veiculo.getId())).body(dadosVeiculo);
     }
 
     @PutMapping("/{id}")
