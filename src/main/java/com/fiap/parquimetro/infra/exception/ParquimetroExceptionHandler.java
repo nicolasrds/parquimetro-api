@@ -10,6 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -82,6 +83,12 @@ public class ParquimetroExceptionHandler {
     public ResponseEntity<Object> handleNullPointerException(NullPointerException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
                 ex, messageService.getMessage("nullPointerExceptionMessage"))));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        return ResponseEntity.badRequest().body((new DadosErro(
+                ex, messageService.getMessage("httpMessageNotReadableExceptionMessage"))));
     }
 
     @ExceptionHandler(RegraDeNegocioException.class)

@@ -1,4 +1,4 @@
-package com.fiap.parquimetro.dominio.controleCadastro.condutor.dto;
+package com.fiap.parquimetro.dominio.controleCadastro.veiculo.dto;
 
 import com.fiap.parquimetro.dominio.controleCadastro.condutor.entity.Condutor;
 import com.fiap.parquimetro.dominio.util.Endereco;
@@ -34,9 +34,4 @@ public record DadosCondutorVeiculo(
                 condutor.getEndereco());
     }
 
-//    @JsonIgnore
-//    @Override
-//    public Long getId() {
-//        return id;
-//    }
 }

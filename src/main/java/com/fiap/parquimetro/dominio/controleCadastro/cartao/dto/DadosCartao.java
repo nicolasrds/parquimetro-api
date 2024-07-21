@@ -1,6 +1,7 @@
 package com.fiap.parquimetro.dominio.controleCadastro.cartao.dto;
 
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.entity.Cartao;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -24,11 +25,14 @@ public record DadosCartao(
         @NotEmpty(message = "O CVV do cartão é obrigatório")
         String cvv
 
+
 ) {
 
     public DadosCartao(Cartao cartao) {
-        this(cartao.getNumero(), cartao.getTitular(),
-                cartao.getValidade(), cartao.getCvv());
+        this(cartao.getNumero(),
+                cartao.getTitular(),
+                cartao.getValidade(),
+                cartao.getCvv());
     }
 
 }

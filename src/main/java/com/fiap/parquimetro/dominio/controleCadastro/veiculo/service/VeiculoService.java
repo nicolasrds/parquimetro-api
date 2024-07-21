@@ -4,6 +4,7 @@ import com.fiap.parquimetro.dominio.controleCadastro.condutor.service.CondutorSe
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.dto.DadosVeiculo;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.entity.Veiculo;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.repository.VeiculoRepository;
+import com.fiap.parquimetro.infra.util.MessageService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
@@ -21,9 +22,9 @@ import java.util.Optional;
 @CacheConfig(cacheNames = {"veiculoCache"})
 public class VeiculoService {
 
-    private VeiculoRepository veiculoRepository;
-    private CondutorService condutorService;
-
+    private final VeiculoRepository veiculoRepository;
+    private final CondutorService condutorService;
+    private final MessageService messageService;
 
     @Cacheable(key = "#pageable", unless = "#result == null")
     public Page<DadosVeiculo> listarVeiculos(Pageable pageable) {
@@ -34,7 +35,7 @@ public class VeiculoService {
     @Cacheable(key = "#id", unless = "#result == null")
     public Optional<Veiculo> buscarVeiculo(Long id) {
         return Optional.ofNullable(veiculoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado")));
+                .orElseThrow(() -> new EntityNotFoundException(messageService.getMessage("vaiculoNaoEncontrado"))));
     }
 
     @Transactional
@@ -58,7 +59,7 @@ public class VeiculoService {
 
            return new DadosVeiculo(veiculo);
        } catch (EntityNotFoundException e){
-            throw new EntityNotFoundException("Veiculo não encontrado!");
+            throw new EntityNotFoundException(messageService.getMessage("veiculoNaoEncontrado"));
        }
 
     }

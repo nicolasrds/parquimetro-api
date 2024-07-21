@@ -3,6 +3,7 @@ package com.fiap.parquimetro.api.resource.controleCadastro.condutor;
 import com.fiap.parquimetro.dominio.controleCadastro.condutor.dto.DadosCondutor;
 import com.fiap.parquimetro.dominio.controleCadastro.condutor.entity.Condutor;
 import com.fiap.parquimetro.dominio.controleCadastro.condutor.service.CondutorService;
+import com.fiap.parquimetro.dominio.util.UriUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,7 @@ public class CondutorResource {
     public ResponseEntity<DadosCondutor> cadastrar(@Valid @RequestBody DadosCondutor dadosCondutor) {
         Condutor condutor = new Condutor(dadosCondutor);
         condutorService.atualizarCondutor(condutor);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand((condutor.getId())).toUri();
-        return ResponseEntity.created(uri).body(new DadosCondutor(condutor));
+        return ResponseEntity.created(UriUtil.createUriWithId(condutor.getId())).body(new DadosCondutor(condutor));
     }
 
     @GetMapping("/{cpf}")

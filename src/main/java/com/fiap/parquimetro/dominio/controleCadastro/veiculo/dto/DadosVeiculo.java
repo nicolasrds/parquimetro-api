@@ -1,6 +1,5 @@
 package com.fiap.parquimetro.dominio.controleCadastro.veiculo.dto;
 
-import com.fiap.parquimetro.dominio.controleCadastro.condutor.dto.DadosCondutorVeiculo;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.entity.Veiculo;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
