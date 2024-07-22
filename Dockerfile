@@ -1,11 +1,11 @@
-FROM maven:3-eclipse-temurin-21-alpine AS builder
+FROM maven:3-eclipse-temurin-17-alpine AS builder
 WORKDIR app
 
 COPY pom.xml .
 COPY src src
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:17-jre-alpine
 
 RUN addgroup -S parquimetro && adduser -S parquimetro -G parquimetro
 USER parquimetro
