@@ -1,0 +1,40 @@
+services:
+  parquimetro-api:
+    image: 'parquimetro-api:latest'
+    build:
+      context: .
+    container_name: parquimetro-api
+    depends_on:
+      - postgres-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/parquimetro
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    ports:
+      - "8080:8080"
+
+    networks:
+      - parquimetro-api-network
+
+  postgres-db:
+    image: postgres:16.3
+    container_name: postgres-db
+    volumes:
+      - ./01-create-schema.sql:/docker-entrypoint-initdb.d/01-create-schema.sql
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=parquimetro
+    networks:
+      - parquimetro-api-network
+
+volumes:
+  pgdata:
+
+networks:
+  parquimetro-api-network:
+    driver: bridge
