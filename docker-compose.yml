@@ -7,15 +7,16 @@ services:
     depends_on:
       - postgres-db
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${USER_DB}
+      - POSTGRES_PASSWORD=${PASSWORD_DB}
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/parquimetro
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+      - SPRING_DATASOURCE_USERNAME=${USER_DB}
+      - SPRING_DATASOURCE_PASSWORD=${PASSWORD_DB}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8080:8080"
-
+    env_file:
+      - .env
     networks:
       - parquimetro-api-network
 
@@ -23,15 +24,16 @@ services:
     image: postgres:16.3
     container_name: postgres-db
     volumes:
-      - ./01-create-schema.sql:/docker-entrypoint-initdb.d/01-create-schema.sql
+      - ./scripts-db/01-create-schema.sql:/docker-entrypoint-initdb.d/01-create-schema.sql
       - pgdata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${USER_DB}
+      - POSTGRES_PASSWORD=${PASSWORD_DB}
       - POSTGRES_DB=parquimetro
     networks:
       - parquimetro-api-network
-
+    env_file:
+      - .env
 volumes:
   pgdata:
 
