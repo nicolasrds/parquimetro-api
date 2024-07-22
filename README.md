@@ -24,7 +24,7 @@ Para testar a aplicação, siga os passos abaixo:
 5. A aplicação estará disponível e pronta para uso. Verifique a documentação específica para acessar os serviços e endpoints.
 
 ## 💡 Motivação
-A cidade com 300.000 habitantes, recebe um grande fluxo de turistas. Este aumento populacional gera uma demanda significativa por vagas de estacionamento, expondo as limitações do sistema atual, que se mostra ineficiente e incapaz de acompanhar o crescimento da cidade. A implementação de um novo sistema se torna crucial para otimizar a gestão de vagas, melhorar a experiência do usuário e gerar novas fontes de receita para o município.
+A cidade recebe um grande fluxo de turistas. Este aumento populacional gera uma demanda significativa por vagas de estacionamento, expondo as limitações do sistema atual, que se mostra ineficiente e incapaz de acompanhar o crescimento da cidade. A implementação de um novo sistema se torna crucial para otimizar a gestão de vagas, melhorar a experiência do usuário e gerar novas fontes de receita para o município.
 
 ## 🎯 Objetivos
 
@@ -39,19 +39,10 @@ Desenvolver um sistema de parquímetro moderno, eficiente e escalável para gere
 - Gerar recibos detalhados das transações, informando o tempo de permanência e o método de pagamento utilizado.
 - Fornecer dashboards e relatórios gerenciais para a administração do sistema, possibilitando a análise de dados e a tomada de decisão.
 
-## 🛠 Problemas a serem Resolvidos
-O sistema atual apresenta as seguintes deficiências:
-- Lentidão e falta de confiabilidade.
-- Baixa escalabilidade, tornando-o inadequado para atender à crescente demanda.
-- Interfaces de usuário desatualizadas e pouco intuitivas.
-- Falta de flexibilidade nas opções de pagamento.
-- Dificuldade na geração de relatórios e acompanhamento de receitas.
-- Ausência de funcionalidades como alertas de tempo de estacionamento e controle de tempo preciso.
-
 ## 💡 Solução Proposta
-A solução proposta consiste no desenvolvimento de um novo sistema de parquímetro utilizando tecnologias modernas e eficientes, como Java Spring, para garantir segurança, escalabilidade e flexibilidade. O Sistema será acessível através de diferentes plataformas, incluindo:
-- Aplicação móvel: Permitirá aos condutores gerenciar seus veículos, iniciar e finalizar o tempo de estacionamento, realizar pagamentos, configurar alertas e consultar histórico de uso.
-- Terminais de autoatendimento: Posicionados estrategicamente nas áreas de estacionamento, permitirão aos usuários efetuar o pagamento, consultar informações e imprimir recibos.
+A solução proposta consiste no desenvolvimento de um novo sistema de parquímetro utilizando tecnologias modernas e eficientes, como Java Spring, para garantir segurança, escalabilidade e flexibilidade. O Sistema será acessível através de plataformas, como:
+- Aplicação Web: Permitirá aos condutores gerenciar seus veículos, iniciar e finalizar o tempo de estacionamento, realizar pagamentos, configurar alertas e consultar histórico de uso.
+
 
 ## 🌟 Benefícios Esperados
 A implementação do novo sistema trará os seguintes benefícios:
@@ -66,12 +57,11 @@ O Sistema abrange os seguintes domínios e subdomínios:
 ### Gerenciamento de Cadastrados:
 - Cadastro e autenticação de condutores.
 - Gerenciamento de veículos.
-- Registro de formas de pagamento (cartão ou PIX)
 - Histórico de uso e pagamentos.
 ### Controle de Estacionamento:
 - Definição de áreas de estacionamento e horários de funcionamento.
 - Gerenciamento de vagas.
-- Controle de tempo de estacionamento (início, término, tipos de período).
+- Controle de tempo de estacionamento (início, término, tipos de período, forma de pagamento).
 ### Alertas:
 - Configuração de alertas de tempo limite.
 - Notificações de expiração (fixo) e renovação automática (variável).
@@ -83,23 +73,22 @@ O Sistema abrange os seguintes domínios e subdomínios:
 - **Tempo de estacionamento**: Período em que um veículo ocupa uma vaga, podendo ser fixo ou variável.
 - **Tarifa**: Valor cobrado por hora ou fração de hora de estacionamento.
 - **Pagamento**: Transação financeira realizada pelo condutor para quitar o valor do estacionamento.
-- **Forma Pagamento**: Tipo do pagamento escolhido pelo condutor “P” = Pix | “C” = Cartão
+- **Forma Pagamento**: Tipo do pagamento escolhido pelo condutor
 
 ## 🔄 Fluxo de Funcionamento do Sistema
 1. O condutor se registra no sistema, fornecendo informações pessoais.
-2. O condutor registra sua forma de pagamento preferida (cartão de crédito, débito ou PIX).
-3. O condutor inicia o registro de tempo no sistema, escolhendo entre tempo fixo (indicando a duração desejada) ou por hora.
-4. O sistema monitora o tempo de estacionamento e cobra o valor adequado com base nas opções de pagamento selecionadas.
-5. Para horários fixos, o sistema emite um alerta quando o tempo está prestes a expirar.
-6. Para períodos variáveis, o sistema emite um alerta informando que estenderá automaticamente o estacionamento por mais uma hora, a menos que o condutor desligue o registro.
-7. Quando o tempo de estacionamento é encerrado, o sistema emite um recibo para o condutor.
+2. O condutor inicia o registro de tempo no sistema, escolhendo entre tempo fixo (indicando a duração desejada) ou por hora.
+3. O sistema monitora o tempo de estacionamento e cobra o valor adequado com base nas opções de pagamento selecionadas (cartão de crédito, débito ou PIX)..
+4. Para horários fixos, o sistema emite um alerta quando o tempo está prestes a expirar.
+5. Para períodos variáveis, o sistema emite um alerta informando que estenderá automaticamente o estacionamento por mais uma hora, a menos que o condutor desligue o registro.
+6. Quando o tempo de estacionamento é encerrado, o sistema emite um recibo para o condutor.
 
 ## 🛠 Especificações Técnicas
-Para o desenvolvimento do sistema de adoção de pets, propomos as seguintes especificações técnicas:
+Para o desenvolvimento do sistema, propomos as seguintes especificações técnicas:
 
 ### Tecnologias:
-- Spring Boot como framework principal para o desenvolvimento da aplicação.
 - Java
+- Spring Boot
 - Spring Data
 - Lombok
 - Maven
