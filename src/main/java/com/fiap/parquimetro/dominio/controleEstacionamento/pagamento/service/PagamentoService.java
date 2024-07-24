@@ -58,8 +58,7 @@ public class PagamentoService {
         lista.add(pagamento);
         Map<String, Object> parametros = new HashMap<>();
             return relatorioUtil.gerarRelatorioEmByte(PastaRelatorio.REL_RECIBO,
-                    PastaRelatorio.SUB_REPORT_CABECALHO_PAISAGEM,
-                    "teste", lista, parametros);
+                    "recibo", lista, parametros);
 
 
 
