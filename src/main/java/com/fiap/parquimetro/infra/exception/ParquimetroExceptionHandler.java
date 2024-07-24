@@ -7,6 +7,7 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.UnexpectedTypeException;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.hibernate.LazyInitializationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @RestControllerAdvice
@@ -89,6 +92,17 @@ public class ParquimetroExceptionHandler {
     public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest().body((new DadosErro(
                 ex, messageService.getMessage("httpMessageNotReadableExceptionMessage"))));
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<Object> handleHttpMessageNotReadableException(NoSuchElementException ex) {
+        return ResponseEntity.badRequest().body((new DadosErro(
+                ex, messageService.getMessage("noSuchElementExceptionMessage"))));
+    }
+    @ExceptionHandler(LazyInitializationException.class)
+    public ResponseEntity<Object> handleLazyInitializationExceptionException(LazyInitializationException ex) {
+        return ResponseEntity.badRequest().body((new DadosErro(
+                ex, messageService.getMessage("lazyInitializationExceptionMessage"))));
     }
 
     @ExceptionHandler(RegraDeNegocioException.class)

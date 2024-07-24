@@ -1,4 +1,4 @@
-package com.fiap.parquimetro.dominio.controleEstacionamento.util;
+package com.fiap.parquimetro.dominio.controleEstacionamento.registro.bussines.valorDevido;
 
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.entity.Registro;
 import lombok.extern.slf4j.Slf4j;

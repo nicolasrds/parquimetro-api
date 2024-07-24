@@ -1,6 +1,5 @@
 package com.fiap.parquimetro.dominio.controleEstacionamento.registro.service;
 
-import com.fiap.parquimetro.dominio.controleCadastro.condutor.entity.Condutor;
 import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.service.EstacionamentoService;
 import com.fiap.parquimetro.dominio.controleCadastro.veiculo.service.VeiculoService;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.dto.DadosRegistro;
@@ -17,9 +16,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @AllArgsConstructor
@@ -73,11 +74,31 @@ public class RegistroService {
         Registro registro = registroRepository.findById(id)
                 .orElseThrow(() ->
                         new NoSuchElementException(messageService.getMessage("registroNaoEncontrado")));
-        if (registro.getFim() != null){
+        if (registro.getFim() != null) {
             throw new RegraDeNegocioException(messageService.getMessage("registroEncerrado"));
         }
         registro.setFim(LocalDateTime.now());
         registroRepository.save(registro);
+    }
+
+    public List<Registro> consultarRegistrosAbertos() {
+        return registroRepository.findByDataFimIsNull();
+    }
+
+    /**
+     * A cada minuto executa a consulta para checar quem está aberto e que já vai adicionar mais 1 hora
+     */
+    @Scheduled(cron = "0 0/1 * * * *", zone = "America/Fortaleza")
+    public void notificar() {
+        log.info("***Iniciando checagem.");
+        List<Registro> registros = consultarRegistrosAbertos();
+        registros.stream()
+                .filter(Registro::isDeveNotificar)
+                .forEach(registro -> {
+                    registro.notificar();
+                    registroRepository.save(registro);
+                });
+        log.info("***Finalizando checagem.");
     }
 
 

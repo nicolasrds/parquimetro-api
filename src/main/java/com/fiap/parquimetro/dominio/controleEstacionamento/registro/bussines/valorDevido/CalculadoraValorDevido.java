@@ -1,4 +1,4 @@
-package com.fiap.parquimetro.dominio.controleEstacionamento.util;
+package com.fiap.parquimetro.dominio.controleEstacionamento.registro.bussines.valorDevido;
 
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.entity.Registro;
 
@@ -6,6 +6,6 @@ import java.math.BigDecimal;
 
 public interface CalculadoraValorDevido {
 
-    public BigDecimal calcularValorDevido(Registro registro);
+    BigDecimal calcularValorDevido(Registro registro);
 
 }
