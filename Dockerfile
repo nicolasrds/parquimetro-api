@@ -12,4 +12,4 @@ USER parquimetro
 COPY --from=builder /app/target/*.jar /app/parquimetro-api.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar","/app/parquimetro-api.jar"]
+ENTRYPOINT ["java", "-jar","-Duser.timezone=America/Fortaleza", "/app/parquimetro-api.jar"]
