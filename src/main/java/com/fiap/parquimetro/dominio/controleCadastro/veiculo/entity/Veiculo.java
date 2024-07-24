@@ -48,7 +48,7 @@ public class Veiculo {
     @Size(min = 3, max = 255)
     private String cor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @NotNull
     @JoinColumn(name = "vei_condutor_id", foreignKey = @ForeignKey(name = "fk_condutor_veiculo"))
     private Condutor condutor;

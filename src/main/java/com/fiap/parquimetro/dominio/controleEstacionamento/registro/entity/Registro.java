@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Slf4j
 public class Registro {
 
     @Id
@@ -52,15 +54,36 @@ public class Registro {
     @Column(name = "reg_fim")
     private LocalDateTime fim;
 
-    @Column(name = "reg_duracao", updatable = false)
+    @Column(name = "reg_duracao")
     private Integer duracao;
 
     public Registro(DadosRegistro dadosRegistro, Veiculo veiculo, Estacionamento estacionamento) {
         setInicio(LocalDateTime.now());
         setFim(dadosRegistro.dataFim());
         setTipo(dadosRegistro.tipoRegistro());
-        setDuracao(dadosRegistro.duracao());
+        setDuracao(preencherDuracao(dadosRegistro));
         setVeiculo(veiculo);
         setEstacionamento(estacionamento);
+    }
+
+
+    public void notificar() {
+        log.info("============================================");
+        log.info("Entrando para notificar o condutor {}. ", getVeiculo().getCondutor().getNome());
+        setDuracao(getDuracao() + 1);
+        log.info("O tempo será extendido para {} horas.", getDuracao());
+        log.info("============================================");
+    }
+
+    public boolean isDeveNotificar() {
+        LocalDateTime previsaoEncerramento = getInicio().plusHours(getDuracao());
+        return previsaoEncerramento.isBefore(LocalDateTime.now());
+    }
+
+    private Integer preencherDuracao(DadosRegistro dadosRegistro){
+        if (getTipo().equals(TipoRegistro.FIXO)){
+            return dadosRegistro.duracao();
+        }
+        return 1;
     }
 }
