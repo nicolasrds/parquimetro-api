@@ -89,6 +89,7 @@ Para o desenvolvimento do sistema, propomos as seguintes especificações técni
 ### Tecnologias:
 - Java
 - Spring Boot
+- Caffeine
 - Spring Data
 - Lombok
 - Maven
@@ -96,6 +97,21 @@ Para o desenvolvimento do sistema, propomos as seguintes especificações técni
 
 ### Banco de Dados:
 - PostgreSQL
+
+## ⚡️ Cache 
+
+### Desempenho Aprimorado com Cache
+
+Para lidar com o volume de acessos e melhorar o desempenho da aplicação, implementamos uma funcionalidade de cache de nível 2 utilizando o Caffeine no Spring Boot. Esta funcionalidade permite que as rotas façam uso do cache, reduzindo a necessidade de acessos constantes ao banco de dados.
+
+### Benefícios do Cache
+
+- **Redução de Latência:** Consultas ao banco de dados são minimizadas, reduzindo significativamente o tempo de resposta das requisições.
+- **Melhor Utilização de Recursos:** Menor carga no banco de dados, permitindo uma melhor alocação de recursos e aumento na escalabilidade do sistema.
+- **Experiência do Usuário:** Respostas mais rápidas melhoram a satisfação do usuário final e tornam a aplicação mais ágil e responsiva.
+
+Com esta funcionalidade, o Sistema de Parquímetro não apenas ganha em performance, mas também em robustez e capacidade de resposta.
+
 
 ## 👥 Contribuintes
 
