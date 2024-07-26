@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lembrete de Estacionamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .content {
+            font-size: 16px;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            color: #888;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Lembrete de Estacionamento</h1>
+    </div>
+    <div class="content">
+        <p>Olá, <span th:text="${nome}"></span>,</p>
+        <p>Este é um lembrete de que seu horário de estacionamento com duração de  <span th:text="${duracao}"></span>/h  foi finalizado.</p>
+        <p>Por favor, não se esqueça de planejar e renovar seu período conforme necessário.</p>
+        <p>Atenciosamente,<br/>Equipe do Estacionamento</p>
+    </div>
+    <div class="footer">
+        <p>© 2024</p>
+    </div>
+</div>
+</body>
+</html>

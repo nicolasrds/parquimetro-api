@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Slf4j
 public class TipoCalculoVariavel implements CalculadoraValorDevido{
     @Override
-    public BigDecimal calcularValorDevido(Registro registro) {
+        public BigDecimal calcularValorDevido(Registro registro) {
         long quantidadeDeHoras = DataUtil.retornarHoraCompletaPorFracao(registro.getInicio(), registro.getFim());
         BigDecimal valor = registro.getEstacionamento().getTarifa().multiply(new BigDecimal(quantidadeDeHoras));
         log.info("Tarifa -> {}", registro.getEstacionamento().getTarifa());
