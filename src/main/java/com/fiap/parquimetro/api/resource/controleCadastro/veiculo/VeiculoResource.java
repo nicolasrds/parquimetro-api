@@ -53,7 +53,7 @@ public class VeiculoResource {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DadosVeiculo> Delete(@PathVariable Long id) {
-        veiculoService.delete(id);
+        veiculoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 

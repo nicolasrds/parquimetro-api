@@ -3,6 +3,7 @@ package com.fiap.parquimetro.api.resource.controleCadastro.cartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.dto.DadosCartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.entity.Cartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.service.CartaoService;
+import com.fiap.parquimetro.dominio.controleCadastro.condutor.dto.DadosCondutor;
 import com.fiap.parquimetro.dominio.util.UriUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,12 @@ public class CartaoResource {
         List<DadosCartao> cartoes = cartaoService.listarCartaoPorCondutorId(condutorId)
                 .stream().map(DadosCartao::new).toList();
         return ResponseEntity.ok(cartoes);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DadosCondutor> Delete(@PathVariable Long id) {
+        cartaoService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

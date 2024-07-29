@@ -65,7 +65,7 @@ public class VeiculoService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void deletar(Long id) {
         veiculoRepository.deleteById(id);
     }
 }

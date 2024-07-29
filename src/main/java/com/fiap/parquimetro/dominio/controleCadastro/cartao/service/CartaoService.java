@@ -44,4 +44,9 @@ public class CartaoService {
                         new EntityNotFoundException(messageService.getMessage("cartaoNaoEncontrado")));
     }
 
+    @Transactional
+    public void deletar(Long id){
+        cartaoRepository.deleteById(id);
+    }
+
 }
