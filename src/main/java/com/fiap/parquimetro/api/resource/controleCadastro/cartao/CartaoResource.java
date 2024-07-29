@@ -4,6 +4,8 @@ import com.fiap.parquimetro.dominio.controleCadastro.cartao.dto.DadosCartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.entity.Cartao;
 import com.fiap.parquimetro.dominio.controleCadastro.cartao.service.CartaoService;
 import com.fiap.parquimetro.dominio.util.UriUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,12 +19,14 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/controle-cadastro/cartao")
+@Tag(name = "Cartão", description = "Controle dos cartões para pagamento do condutor")
 public class CartaoResource {
 
     private final CartaoService cartaoService;
 
     @PostMapping("/{condutorId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Cadastra um cartão para o condutor.", method = "POST")
     public ResponseEntity<DadosCartao> cadastrar(@PathVariable Long condutorId,
                                                  @Valid @RequestBody DadosCartao dadosCartao                                                 ) {
         Cartao cartao = new Cartao(dadosCartao);
@@ -31,6 +35,7 @@ public class CartaoResource {
     }
 
     @GetMapping("cartoes-do-condutor/{condutorId}")
+    @Operation(summary = "Busca os cartões cadastrados para o condutor.", method = "GET")
     public ResponseEntity<List<DadosCartao>> listarCartoesDoCondutor(@PathVariable Long condutorId) {
         List<DadosCartao> cartoes = cartaoService.listarCartaoPorCondutorId(condutorId)
                 .stream().map(DadosCartao::new).toList();
