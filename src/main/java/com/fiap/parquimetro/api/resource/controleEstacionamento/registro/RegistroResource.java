@@ -4,6 +4,8 @@ import com.fiap.parquimetro.dominio.controleEstacionamento.registro.dto.DadosReg
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.entity.Registro;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.service.RegistroService;
 import com.fiap.parquimetro.dominio.util.UriUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,12 +21,14 @@ import java.net.URI;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/controle-estacionamento/registro")
+@Tag(name = "Registro de estacionamento", description = "Controle do registro do estacionamento")
 public class RegistroResource {
 
     private final RegistroService registroService;
 
 
     @GetMapping
+    @Operation(summary = "Busca todos registros de estacionamento.", method = "GET")
     public ResponseEntity<Page<DadosRegistro>> findAll(@PageableDefault(size = 10, page = 0) Pageable pageable) {
         Page<DadosRegistro> dadosRegistros = registroService.consultar(pageable);
         return ResponseEntity.ok(dadosRegistros);
@@ -32,6 +36,7 @@ public class RegistroResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Cria um novo registro de estacionamento.", method = "POST")
     public ResponseEntity<DadosRegistro> cadastrar(@Valid @RequestBody DadosRegistro dadosRegistro) {
         Registro registro = registroService.salvar(dadosRegistro);
         dadosRegistro = new DadosRegistro(registro);
@@ -40,6 +45,7 @@ public class RegistroResource {
 
     @PutMapping("/{id}/encerrar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Encerra um estacionamento ativo.", method = "PUT")
     public void encerrar(@PathVariable Long id) {
         this.registroService.encerrar(id);
     }
