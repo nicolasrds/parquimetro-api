@@ -1,5 +1,6 @@
 package com.fiap.parquimetro.api.resource.controleCadastro.estacionamento;
 
+import com.fiap.parquimetro.dominio.controleCadastro.condutor.dto.DadosCondutor;
 import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.dto.DadosEstacionamento;
 import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.entity.Estacionamento;
 import com.fiap.parquimetro.dominio.controleCadastro.estacionamento.service.EstacionamentoService;
@@ -44,6 +45,10 @@ public class EstacionamentoResource {
     public Page<DadosEstacionamento> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return estacionamentoService.consultar(paginacao).map(DadosEstacionamento::new);
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DadosCondutor> Delete(@PathVariable Long id) {
+        estacionamentoService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

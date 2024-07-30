@@ -62,9 +62,7 @@ O Sistema abrange os seguintes domínios e subdomínios:
 - Definição de áreas de estacionamento e horários de funcionamento.
 - Gerenciamento de vagas.
 - Controle de tempo de estacionamento (início, término, tipos de período, forma de pagamento).
-### Alertas:
-- Configuração de alertas de tempo limite.
-- Notificações de expiração (fixo) e renovação automática (variável).
+- Notificações de expiração (fixo)
 
 ## 🗣 Linguagem Ubíqua
 - **Condutor**: Usuário do sistema que utiliza o estacionamento.
@@ -79,9 +77,9 @@ O Sistema abrange os seguintes domínios e subdomínios:
 1. O condutor se registra no sistema, fornecendo informações pessoais.
 2. O condutor inicia o registro de tempo no sistema, escolhendo entre tempo fixo (indicando a duração desejada) ou por hora.
 3. O sistema monitora o tempo de estacionamento e cobra o valor adequado com base nas opções de pagamento selecionadas (cartão de crédito, débito ou PIX)..
-4. Para horários fixos, o sistema emite um alerta quando o tempo está prestes a expirar.
-5. Para períodos variáveis, o sistema emite um alerta informando que estenderá automaticamente o estacionamento por mais uma hora, a menos que o condutor desligue o registro.
-6. Quando o tempo de estacionamento é encerrado, o sistema emite um recibo para o condutor.
+4. Para horários fixos, o sistema emite um alerta quando o tempo expirar.
+5. Para períodos variáveis, o sistema emite um alerta informando que estenderá automaticamente o estacionamento por mais uma hora.
+6. Quando o tempo de estacionamento é encerrado, e o pagamento é realizado, o sistema emite um recibo para o condutor.
 
 ## 🛠 Especificações Técnicas
 Para o desenvolvimento do sistema, propomos as seguintes especificações técnicas:
@@ -89,8 +87,8 @@ Para o desenvolvimento do sistema, propomos as seguintes especificações técni
 ### Tecnologias:
 - Java
 - Spring Boot
-- Caffeine
 - Spring Data
+- Caffeine
 - Lombok
 - Maven
 - Docker

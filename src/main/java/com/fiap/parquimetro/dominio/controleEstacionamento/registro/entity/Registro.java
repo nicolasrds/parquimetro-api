@@ -67,21 +67,13 @@ public class Registro {
     }
 
 
-    public void notificar() {
-        log.info("============================================");
-        log.info("Entrando para notificar o condutor {}. ", getVeiculo().getCondutor().getNome());
-        setDuracao(getDuracao() + 1);
-        log.info("O tempo será extendido para {} horas.", getDuracao());
-        log.info("============================================");
-    }
-
     public boolean isDeveNotificar() {
         LocalDateTime previsaoEncerramento = getInicio().plusHours(getDuracao());
         return previsaoEncerramento.isBefore(LocalDateTime.now());
     }
 
-    private Integer preencherDuracao(DadosRegistro dadosRegistro){
-        if (getTipo().equals(TipoRegistro.FIXO)){
+    private Integer preencherDuracao(DadosRegistro dadosRegistro) {
+        if (getTipo().equals(TipoRegistro.FIXO)) {
             return dadosRegistro.duracao();
         }
         return 1;

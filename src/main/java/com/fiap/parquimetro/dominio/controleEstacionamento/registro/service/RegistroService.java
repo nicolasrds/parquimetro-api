@@ -6,6 +6,7 @@ import com.fiap.parquimetro.dominio.controleEstacionamento.registro.dto.DadosReg
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.entity.Registro;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.enumeration.TipoRegistro;
 import com.fiap.parquimetro.dominio.controleEstacionamento.registro.repository.RegistroRepository;
+import com.fiap.parquimetro.dominio.util.EmailUtil;
 import com.fiap.parquimetro.infra.exception.RegraDeNegocioException;
 import com.fiap.parquimetro.infra.util.MessageService;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,6 +34,7 @@ public class RegistroService {
     private final VeiculoService veiculoService;
     private final EstacionamentoService estacionamentoService;
     private final MessageService messageService;
+    private final EmailUtil emailUtil;
 
 
     @Cacheable(key = "#pageable", unless = "#result == null")
@@ -48,7 +50,7 @@ public class RegistroService {
                         -> new EntityNotFoundException(messageService.getMessage("registroNaoEncontrado")));
     }
 
-    @CacheEvict(allEntries = true, cacheNames = "registroCache")
+
     public Registro salvar(DadosRegistro dadosRegistro) {
 
         if (dadosRegistro.tipoRegistro().equals(TipoRegistro.FIXO)
@@ -69,7 +71,7 @@ public class RegistroService {
         return registroRepository.save(registro);
     }
 
-    @CacheEvict(allEntries = true, cacheNames = "registroCache")
+
     public void encerrar(Long id) {
         Registro registro = registroRepository.findById(id)
                 .orElseThrow(() ->
@@ -89,16 +91,40 @@ public class RegistroService {
      * A cada minuto executa a consulta para checar quem está aberto e que já vai adicionar mais 1 hora
      */
     @Scheduled(cron = "0 0/1 * * * *", zone = "America/Fortaleza")
-    public void notificar() {
+    public void agendamento() {
         log.info("***Iniciando checagem.");
         List<Registro> registros = consultarRegistrosAbertos();
         registros.stream()
                 .filter(Registro::isDeveNotificar)
                 .forEach(registro -> {
-                    registro.notificar();
+                    notificar(registro);
                     registroRepository.save(registro);
                 });
         log.info("***Finalizando checagem.");
+    }
+
+
+    public void notificar(Registro registro) {
+        log.info("============================================");
+        log.info("Entrando para notificar o condutor {}. ", registro.getVeiculo().getCondutor().getNome());
+
+        if(registro.getTipo().equals(TipoRegistro.VARIAVEL)){
+            registro.setDuracao(registro.getDuracao() + 1);
+            log.info("O tempo será extendido para {} horas.", registro.getDuracao());
+            emailUtil.enviarEmail(registro.getVeiculo().getCondutor().getEmail(),
+                    registro.getVeiculo().getCondutor().getNome(),registro.getDuracao(),
+                    "emailHorarioVariavel");
+        }
+
+        if(registro.getTipo().equals(TipoRegistro.FIXO)){
+            registro.setFim(LocalDateTime.now());
+            log.info("O seu tempo de estacionamento finalizou.");
+            emailUtil.enviarEmail(registro.getVeiculo().getCondutor().getEmail(),
+                    registro.getVeiculo().getCondutor().getNome(),registro.getDuracao(),
+                    "emailHorarioFixo");
+        }
+
+        log.info("============================================");
     }
 
 

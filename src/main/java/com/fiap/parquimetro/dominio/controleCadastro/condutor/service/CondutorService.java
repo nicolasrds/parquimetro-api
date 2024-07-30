@@ -44,4 +44,9 @@ public class CondutorService {
                         messageService.getMessage("condutorNaoEncontrado"))));
     }
 
+    @Transactional
+    public void deletar(Long id) {
+        condutorRepository.deleteById(id);
+    }
+
 }

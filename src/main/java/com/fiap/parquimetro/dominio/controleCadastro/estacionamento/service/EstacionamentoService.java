@@ -38,4 +38,8 @@ public class EstacionamentoService {
         return estacionamentoRepository.findAll(pageable);
     }
 
+    @Transactional
+    public void deletar(Long id){
+        estacionamentoRepository.deleteById(id);
+    }
 }
