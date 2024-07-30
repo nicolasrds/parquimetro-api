@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "veiculo", schema = "controle_cadastro",
+@Table(name = "veiculo",
         indexes = {
                 @Index(name = "uk_vei_placa", columnList = "vei_placa", unique = true),
         })

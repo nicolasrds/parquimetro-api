@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Length;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "estacionamento", schema = "controle_cadastro",
+@Table(name = "estacionamento",
         indexes = {@Index(name = "uk_est_nome", columnList = "est_nome", unique = true)}
 )
 @Data

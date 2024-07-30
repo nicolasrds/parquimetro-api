@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "registro", schema = "controle_estacionamento",
+@Table(name = "registro",
         uniqueConstraints = {@UniqueConstraint(name = "uk_registro_veiculo",
                 columnNames = {"vei_id", "reg_inicio"})})
 @Data

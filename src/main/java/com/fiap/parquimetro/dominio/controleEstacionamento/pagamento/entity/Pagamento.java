@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "pagamento", schema = "controle_estacionamento",
+@Table(name = "pagamento",
         indexes = {
                 @Index(name = "uk_reg_id", columnList = "reg_id", unique = true),
         })
